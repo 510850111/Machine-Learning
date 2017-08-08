@@ -1,4 +1,4 @@
- #coding:utf-8
+#coding:utf-8
 def fib(n):
 	"""fibonacci series"""
 	a,b = 0,1
