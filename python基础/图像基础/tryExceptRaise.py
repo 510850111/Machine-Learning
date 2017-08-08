@@ -1,6 +1,6 @@
 #coding:utf-8
 try:
-	raise NameError("Ö÷¶¯Å×³öÒì³£:NameError")
+	raise NameError("ä¸»åŠ¨æŠ›å‡ºå¼‚å¸¸:NameError")
 except NameError:
-	print "Òì³£±»Ö÷¶¯Å×³ö!"
+	print("å¼‚å¸¸è¢«æŠ›å‡º!åŸå› æ˜¯:NameError")
 	raise
