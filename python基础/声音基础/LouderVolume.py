@@ -52,11 +52,49 @@ str_data = file.readframes(nframes)
 """
 change_dwmax = wave_data.max() / 100 * 88
 change_dmin = wave_data.min() / 100 * 14
+"""
+frompyfunc，把Python里的函数（可以是自写的）转化成ufunc，
+用法是frompyfunc(func, nin, nout)，其中func是需要转换的函数，nin是函数的输入参数的个数，nout是此函数的返回值的个数。
+注意frompyfunc函数无法保证返回的数据类型都完全一致,
+因此返回一个中间类型object，需要再次obj.astype(np.float64)之类将其元素类型强制调齐。
+"""
+wave_change = np.frompyfunc(waveChange,3,1)
+new_wave_data = wave_change(wave_data,change_dwmax,change_dmin)
+new_wave_data = new_wave_data.astype(wave_data.dtype)
+new_str_data  = new_wave_data.tostring()
 
+#写波形数据参数,配置声道数、量化位数和取样频率
+print("saving new wav file ...")
+file1.setnchannels(nchannels)
+file1.setframerate(framerate)
+file1.setsampwidth(sampwidth)
+#将new_str_data转换为二进制数据写入文件
+file1.writeframes(new_str_data)
 
+#绘制原声音声音波形
+wave_data.shape = -1,2
+wave_data = wave_data.T
+time = np.arange(0,nframes) * (1.0 / framerate)
+pl.subplot(2,2,1)
+pl.plot(time,wave_data[0])
+pl.subplot(2,2,2)
+pl.plot(time,wave_data[1],c="g")
+pl.xlabel("time (seconds)")
 
+#绘制放大声音声音波形
+new_wave_data.shape = -1,2
+new_wave_data = new_wave_data.T
+new_time = np.arange(0,nframes) * (1.0 / framerate)
+pl.subplot(2,2,3)
+pl.plot(new_time,new_wave_data[0])
+pl.subplot(2,2,4)
+pl.plot(new_time,new_wave_data[1],c="g")
+pl.xlabel("time (seconds)")
 
+file.close()
+file1.close()
 
+pl.show()
 
 
 
