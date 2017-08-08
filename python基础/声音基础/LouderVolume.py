@@ -68,6 +68,7 @@ print("saving new wav file ...")
 file1.setnchannels(nchannels)
 file1.setframerate(framerate)
 file1.setsampwidth(sampwidth)
+
 #将new_str_data转换为二进制数据写入文件
 file1.writeframes(new_str_data)
 
