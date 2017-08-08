@@ -19,9 +19,11 @@ file = wave.open(r"wav/back.wav","rb")
 #(nchannels,sampwidth,framerate,nframes,comptype,compname)
 params = file.getparams()
 nchannels,sampwidth,framerate,nframes = params[:4]
+
 #读取波形数据
 str_data = file.readframes(nframes)
 file.close()
+
 #将波形数据装换成数组gt
 wave_data = np.fromstring(str_data,dtype=np.short)
 wave_data.shape = -1,2
