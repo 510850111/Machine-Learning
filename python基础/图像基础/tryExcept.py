@@ -1,8 +1,8 @@
  #coding:utf-8
 while True:
 	try:
-		x = int(raw_input("ÇëÊäÈëÊı×Ö:"))
+		x = int(input("è¯·è¾“å…¥ä¸€ä¸ªæ•°å­—:"))
 		break
 	except ValueError:
-		print "°¥Ñ½,ÄãÊäÈëµÄ²»ÊÇ×Ö·ûÄØ!"
+		print("å¼‚å¸¸è¢«æŠ›å‡º!")
 		break
