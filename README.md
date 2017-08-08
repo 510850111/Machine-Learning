@@ -1,6 +1,19 @@
-# »úÆ÷Ñ§Ï°Êµ¼ùÖ¸ÄÏ
-	°¸ÀıÓ¦ÓÃ½âÎö,µÚ¶ş°æ,»úĞµ¹¤Òµ³ö°æÉç,ISBN:978-7-111-54021-2
-#µã»÷Í¼Æ¬²é¿´´úÂë
-##×Ô¶¨Òåº¯ÊıµÄÑ§Ï°:
-	[![def]](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/def.py)
-	[def](https://github.com/510850111/Machine-Learning/tree/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/def.png)
+# æœºå™¨å­¦ä¹ å®è·µæŒ‡å—  
+	æ¡ˆä¾‹åº”ç”¨è§£æ,ç¬¬äºŒç‰ˆ,æœºæ¢°å·¥ä¸šå‡ºç‰ˆç¤¾,ISBN:978-7-111-54021-2  
+
+***
+* **è‡ªå®šä¹‰å‡½æ•°çš„å­¦ä¹ :** Â 
+```python
+#coding:utf-8
+def fib(n):
+	"""fibonacci series"""
+	a,b = 0,1
+	while a < n:
+		print(a)
+		a,b = b, a+b
+fib(2000)
+```
+- 	**è¿è¡Œåå¦‚ä¸‹å›¾:** Â <br />
+![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/def.png)
+
+***
