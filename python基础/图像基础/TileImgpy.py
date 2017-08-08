@@ -38,7 +38,7 @@ if __name__ == '__main__':
         img_y += 1
         if img_y >= height:
             img_y = 0
-        print(round((now_y * 100) / (height * 5)),'%')
+        print(round((now_y * 100) / (height * 2)),'%')
     cv2.namedWindow('img1')
     cv2.imshow('img', myimg)
     cv2.waitKey()
