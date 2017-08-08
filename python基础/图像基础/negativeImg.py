@@ -5,7 +5,6 @@
 
 @author: Oscar
 """
-
 import cv2
 import numpy as np
 
@@ -32,4 +31,3 @@ if __name__ == '__main__':
     cv2.imshow('负片+水印',img)
     cv2.waitKey()
     cv2.destroyAllWindows()
-    
