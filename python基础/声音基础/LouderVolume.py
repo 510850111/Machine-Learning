@@ -77,9 +77,11 @@ wave_data.shape = -1,2
 wave_data = wave_data.T
 time = np.arange(0,nframes) * (1.0 / framerate)
 pl.subplot(2,2,1)
-pl.plot(time,wave_data[0])
+pl.plot(time,wave_data[0],c="b")
+pl.xlabel("time (seconds)")
+pl.ylabel("Original volume")
 pl.subplot(2,2,2)
-pl.plot(time,wave_data[1],c="g")
+pl.plot(time,wave_data[1],c="b")
 pl.xlabel("time (seconds)")
 
 #绘制放大声音声音波形
@@ -87,23 +89,14 @@ new_wave_data.shape = -1,2
 new_wave_data = new_wave_data.T
 new_time = np.arange(0,nframes) * (1.0 / framerate)
 pl.subplot(2,2,3)
-pl.plot(new_time,new_wave_data[0])
+pl.plot(new_time,new_wave_data[0],c="r")
+pl.xlabel("time (seconds)")
+pl.ylabel("Louder volume")
 pl.subplot(2,2,4)
-pl.plot(new_time,new_wave_data[1],c="g")
+pl.plot(new_time,new_wave_data[1],c="r")
 pl.xlabel("time (seconds)")
 
 file.close()
 fileOUT.close()
 
 pl.show()
-
-
-
-
-
-
-
-
-
-
-
