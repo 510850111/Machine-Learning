@@ -4,6 +4,124 @@
 # 以下是声音基础
 ***
 
+***
+* **降低音量,并绘制出原音频和降低后音频的图谱:**
+```python
+#1/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug  9 08:55:09 2017
+
+LowerVolume.py
+
+减低音量的算法
+音量降低可通过将采样波形变小来实现,具体来说,就是把每个采样数据按一定比例缩小
+同时将缩小的幅度控制在合理的范围内,保证音量降低后声音仍然清晰
+@author: Oscar
+"""
+
+import wave 
+import numpy as np
+import pylab as pl
+
+print("working.....")
+def waveChange(x,dwmax,dwmin):
+    if x != 0:
+        if abs(x) < dwmax and abs(x) > dwmin:
+            x *= 0.5
+        else:
+            x *= 0.2
+    return x
+
+#打开wav文件
+file = wave.open(r"wav/speak.wav","rb")
+fileOUT = wave.open(r"wav/lowerVolumeSpeak.wav","wb")
+
+#读取波形数据
+"""
+笔记:
+    getparams：一次性返回所有的WAV文件的格式信息，它返回的是一个组元(tuple)：
+    声道数,      量化位数（byte单位）, 采样频率,  采样点数,  压缩类型,  压缩类型的描述。
+    nchannels   sampwidth            framerate  nframes  comptype   compname
+    wave模块只支持非压缩的数据，因此可以忽略最后两个信息：
+"""
+#(nchannels,sampwidth,framerate,nframes,comptype,compname)
+params = file.getparams()
+nchannels,sampwidth,framerate,nframes = params[:4]
+str_data = file.readframes(nframes)
+
+#将波形数据转换为数组,并更改:
+print("changing wav data......")
+wave_data = np.fromstring(str_data,dtype=np.short)
+#------start----
+#我不知道为什么要重复下面这几句话,但是是书上的例子,我还是写下来了
+params = file.getparams()
+nchannels,sampwidth,framerate,nframes = params[:4]
+str_data = file.readframes(nframes)
+#------end------
+
+#降低音量
+"""
+与放大音量相似,以原声音波形的最大值为基准,计算上限和下限,以waveChange为回调函数,降低音量
+"""
+change_dwmax = wave_data.max() / 100 * 1
+change_dwmin = wave_data.max() / 100 * 0.5
+"""
+frompyfunc，把Python里的函数（可以是自写的）转化成ufunc，
+用法是frompyfunc(func, nin, nout)，其中func是需要转换的函数，nin是函数的输入参数的个数，nout是此函数的返回值的个数。
+注意frompyfunc函数无法保证返回的数据类型都完全一致,
+因此返回一个中间类型object，需要再次obj.astype(np.float64)之类将其元素类型强制调齐。
+"""
+wave_change = np.frompyfunc(waveChange,3,1)
+out_wave_data = wave_change(wave_data,change_dwmax,change_dwmin)
+out_wave_data = out_wave_data.astype(wave_data.dtype)
+out_str_data = out_wave_data.tostring()
+
+#把波形参数写入磁盘
+print("saving new wav file......")
+fileOUT.setnchannels(nchannels)
+fileOUT.setframerate(framerate)
+fileOUT.setsampwidth(sampwidth)
+fileOUT.writeframes(out_str_data)
+print("new wav file saved!")
+
+#绘制原声音波形图
+wave_data.shape = -1,2
+wave_data = wave_data.T
+time = np.arange(0,nframes) * (1.0 / framerate)
+
+pl.subplot(2,2,1)#亦可写作pl.subplot(221)
+pl.plot(time,wave_data[0],c="b")
+pl.xlabel("time (seconds)")
+pl.ylabel("Original volume")
+pl.subplot(222)#亦可写作pl.subplot(2,2,2)
+pl.plot(time,wave_data[1],c="b")
+pl.xlabel("time (seconds)")
+
+#绘制降低后音量的波形图
+out_wave_data.shape = -1,2
+out_wave_data = out_wave_data.T
+time = np.arange(0,nframes) * (1.0 / framerate)
+
+pl.subplot(2,2,3)#亦可写作pl.subplot(223)
+pl.plot(time,out_wave_data[0],c="r")
+pl.xlabel("time (seconds)")
+pl.ylabel("Lower volume")
+pl.subplot(224)#亦可写作pl.subplot(2,2,4)
+pl.plot(time,out_wave_data[1],c="r")
+pl.xlabel("time (seconds)")
+
+#关闭打开的文件
+file.close()
+fileOUT.close()
+#显示图形
+pl.show()
+
+```
+-	**运行后如下图:**  <br />
+![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LowerVolume.png)  
+
+
 
 ***
 * **增加音量,并绘制出原音频和新音频的图谱:**
@@ -11,47 +129,100 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-绘制波形图
-
-plottingWaveform.py
-
-This is a temporary script file.
+放大音量
+LouderVolume.py.
+为包证声音质量,需要对音量调节范围,设置上限和下限(以原声音为基准,计算上限和下限),
+为此编写waveChange(x,dwmax,dwmin)函数,计算调整后的数据,x为每次采样的波形数据,
+dwmax为上限,dwmin为下限,该函数仅仅会将上限和下限之间的区域内的数据放大为原来的1.5倍,
+在此区域外的数据设置为上限和下限
+@author: Oscar
 """
-
 import wave
 import pylab as pl
 import numpy as np
-print('working')
+def waveChange(x,dwmax,dwmin):
+    """
+        x -- 每次采样的波形数据
+        dwmax -- 上限
+        dwmin -- 下限
+    """
+    if x != 0:
+        if abs(x) > dwmax:
+            x = x / abs(x) * dwmax
+        elif abs(x) < dwmin:
+            x = x / abs(x) * dwmin
+        else:
+            x = x * 1.5
+    return x
 #打开wav文档
-file = wave.open(r"wav/back.wav","rb")
-
-#读取格式信息
+file = wave.open(r"wav/speak.wav","rb")
+fileOUT = wave.open(r"wav/OUT.wav","wb")
 #(nchannels,sampwidth,framerate,nframes,comptype,compname)
 params = file.getparams()
 nchannels,sampwidth,framerate,nframes = params[:4]
-
-#读取波形数据
+print("reading wav file......")
 str_data = file.readframes(nframes)
-file.close()
-
-#将波形数据装换成数组gt
+#将波形数据转换为数组,并更改
+print("changing wav file......")
 wave_data = np.fromstring(str_data,dtype=np.short)
-wave_data.shape = -1,2
+#---start---
+#我不知道为什么要重复这几句话,但是是书上的例子,我还是写下来了
+params = file.getparams()
+nchannels,sampwidth,framerate,nframes = params[:4]
+str_data = file.readframes(nframes)
+#---end---
 
+#放大音量
+"""
+为保证放大后不失真,可采用以原声音为基准的放大策略,声音波形图像内室正弦函数图像,
+再以时间轴为X轴,采样数据为Y轴的坐标系中,波形数据可正可负,上下波动
+因此,以原声音数据的最大值为依据计算上下限,上限为原声音数据最大值的88%,下限为原声音数据最大值的14%
+"""
+change_dwmax = wave_data.max() / 100 * 88
+change_dmin = wave_data.max() / 100 * 14
+"""
+frompyfunc，把Python里的函数（可以是自写的）转化成ufunc，
+用法是frompyfunc(func, nin, nout)，其中func是需要转换的函数，nin是函数的输入参数的个数，nout是此函数的返回值的个数。
+注意frompyfunc函数无法保证返回的数据类型都完全一致,
+因此返回一个中间类型object，需要再次obj.astype(np.float64)之类将其元素类型强制调齐。
+"""
+wave_change = np.frompyfunc(waveChange,3,1)
+new_wave_data = wave_change(wave_data,change_dwmax,change_dmin)
+new_wave_data = new_wave_data.astype(wave_data.dtype)
+new_str_data  = new_wave_data.tostring()
+
+#写波形数据参数,配置声道数、量化位数和取样频率
+print("saving new wav file ...")
+fileOUT.setnchannels(nchannels)
+fileOUT.setframerate(framerate)
+fileOUT.setsampwidth(sampwidth)
+
+#将new_str_data转换为二进制数据写入文件
+fileOUT.writeframes(new_str_data)
+
+#绘制原声音声音波形
+wave_data.shape = -1,2
 wave_data = wave_data.T
 time = np.arange(0,nframes) * (1.0 / framerate)
-#h绘制波形
-"""
-subplot(mnp) / (m,n,p)是将多个图画到一个平面上的工具。
-其中，m表示是图排成m行，n表示图排成n列，也就是整个figure中有n个图是排成一行的，一共m行，
-如果m=2就是表示2行图。p表示图所在的位置，p=1表示从左到右从上到下的第一个位置。
-"""
-pl.subplot(2,1,1)
+pl.subplot(2,2,1)
 pl.plot(time,wave_data[0])
-pl.subplot(2,1,2)
-
+pl.subplot(2,2,2)
 pl.plot(time,wave_data[1],c="g")
 pl.xlabel("time (seconds)")
+
+#绘制放大声音声音波形
+new_wave_data.shape = -1,2
+new_wave_data = new_wave_data.T
+new_time = np.arange(0,nframes) * (1.0 / framerate)
+pl.subplot(2,2,3)
+pl.plot(new_time,new_wave_data[0])
+pl.subplot(2,2,4)
+pl.plot(new_time,new_wave_data[1],c="g")
+pl.xlabel("time (seconds)")
+
+file.close()
+fileOUT.close()
+
 pl.show()
 ```
 -	**运行后如下图:**  <br />
