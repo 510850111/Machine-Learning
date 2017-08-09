@@ -28,7 +28,7 @@ def waveChange(x,dwmax,dwmin):
     return x
 #打开wav文档
 file = wave.open(r"wav/speak.wav","rb")
-file1 = wave.open(r"wav/jg.wav","wb")
+fileOUT = wave.open(r"wav/OUT.wav","wb")
 #(nchannels,sampwidth,framerate,nframes,comptype,compname)
 params = file.getparams()
 nchannels,sampwidth,framerate,nframes = params[:4]
@@ -51,7 +51,7 @@ str_data = file.readframes(nframes)
 因此,以原声音数据的最大值为依据计算上下限,上限为原声音数据最大值的88%,下限为原声音数据最大值的14%
 """
 change_dwmax = wave_data.max() / 100 * 88
-change_dmin = wave_data.min() / 100 * 14
+change_dmin = wave_data.max() / 100 * 14
 """
 frompyfunc，把Python里的函数（可以是自写的）转化成ufunc，
 用法是frompyfunc(func, nin, nout)，其中func是需要转换的函数，nin是函数的输入参数的个数，nout是此函数的返回值的个数。
@@ -65,12 +65,12 @@ new_str_data  = new_wave_data.tostring()
 
 #写波形数据参数,配置声道数、量化位数和取样频率
 print("saving new wav file ...")
-file1.setnchannels(nchannels)
-file1.setframerate(framerate)
-file1.setsampwidth(sampwidth)
+fileOUT.setnchannels(nchannels)
+fileOUT.setframerate(framerate)
+fileOUT.setsampwidth(sampwidth)
 
 #将new_str_data转换为二进制数据写入文件
-file1.writeframes(new_str_data)
+fileOUT.writeframes(new_str_data)
 
 #绘制原声音声音波形
 wave_data.shape = -1,2
@@ -93,7 +93,7 @@ pl.plot(new_time,new_wave_data[1],c="g")
 pl.xlabel("time (seconds)")
 
 file.close()
-file1.close()
+fileOUT.close()
 
 pl.show()
 
