@@ -7,7 +7,7 @@
 ***
 * **降低音量,并绘制出原音频和降低后音频的图谱:**
 ```python
-#1/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Wed Aug  9 08:55:09 2017
@@ -354,9 +354,9 @@ if __name__ == "__main__":
 -	**运行后如下图(源文件):**  <br />
 ![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/baseImg.png)    
 -	**运行后如下图(载体文件):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
+![def]/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
 -	**运行后如下图(隐藏信息后的文件):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
 
 
 ***
