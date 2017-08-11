@@ -354,7 +354,7 @@ if __name__ == "__main__":
 -	**运行后如下图(源文件):**  <br />
 ![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/baseImg.png)    
 -	**运行后如下图(载体文件):**  <br />
-![def]/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
 -	**运行后如下图(隐藏信息后的文件):**  <br />
 ![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
 
