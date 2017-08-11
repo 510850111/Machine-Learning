@@ -119,7 +119,7 @@ pl.show()
 
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LowerVolume.png)  
+![LowerVolume](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LowerVolume.png)  
 
 
 
@@ -226,7 +226,7 @@ fileOUT.close()
 pl.show()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LouderVolume.png)  
+![LouderVolume](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LouderVolume.png)  
 
 
 ***
@@ -278,10 +278,49 @@ pl.plot(time,wave_data[1],c="g")
 pl.xlabel("time (seconds)")
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/plottingWaveform.png)  
+![plottingWaveform](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/plottingWaveform.png)  
 
 ***
 # 以下是python图像基础
+***
+* **图像文字信息隐藏的解密:**
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+showHideMessage.py
+
+在之前的信息隐藏后,肉眼观察载体图像,仍无法察觉与之前相比有任何变化.
+解密信息与隐藏信息相反,是隐藏信息的逆过程
+图像隐藏信息解密原理:
+    提取载体文件中蓝色像素值为奇数的像素点
+@author: Oscar
+"""
+
+import cv2
+import numpy as np
+
+fn = "saveImg/secretImg.png"
+if __name__ == "__main__":
+    print(u"正在读取文件......")
+    img = cv2.imread(fn)
+    height = img.shape[0]
+    width = img.shape[1]
+    imgInfo = np.zeros((height,width,3),np.uint8)
+    for j in range(0,height):
+        for i in range(0,width):
+            if (img[j,i,0] % 2) == 1:
+                #如果蓝色值为奇数,则该像素点为文字
+                imgInfo[j,i,1] = 255
+        print(u"正在解密......",round(100*j / height),"%")
+    cv2.imshow('imgInfo',imgInfo)
+    #cv2.imwrite(fn,imgInfo)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+```
+-	**运行后如下图(隐藏信息后的文件):**  <br />
+![showHideMessage](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/showHideMessage.png)  
+
 ***
 * **图像的文字信息隐藏:**
 ```python
@@ -352,11 +391,11 @@ if __name__ == "__main__":
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图(源文件):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/baseImg.png)    
+![messageImg](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)    
 -	**运行后如下图(载体文件):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
+![baseImg](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/baseImg.png)  
 -	**运行后如下图(隐藏信息后的文件):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
+![secretImg](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
 
 
 ***
@@ -409,7 +448,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/TileImgpy.png)  
+![TileImgpy](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/TileImgpy.png)  
 
 ***
 * **图片的负片+水印效果:**
@@ -449,7 +488,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/negativeImg.png)  
+![negativeImg](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/negativeImg.png)  
 
 
 ***
@@ -484,7 +523,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/sunset.png)  
+![sunset](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/sunset.png)  
 
 ***
 * **调整图像亮度:**  
@@ -529,9 +568,9 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图(dark):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_dark.png)  
+![AdjustBrightness_dark](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_dark.png)  
 -	**运行后如下图(light):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_light.png)  
+![AdjustBrightness_light](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_light.png)  
 
 ***
 * **图像基础,读取图像:**
@@ -549,7 +588,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/imageBase.png)  
+![imageBase](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/imageBase.png)  
 
 
 ***
@@ -587,7 +626,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/randomXY.png)  
+![randomXY](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/randomXY.png)  
 
 ***
 * **正余弦图像的绘制:**   
@@ -612,10 +651,10 @@ plt.plot(x,y)
 plt.show()
 ```
 -	**运行后如下图(sin):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_sin.png)  
+![Numpy_pylab_matplotlib_sin](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_sin.png)  
 
 -	**运行后如下图(cos):**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_cos.png)
+![Numpy_pylab_matplotlib_cos](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_cos.png)
 
 ***
 * **异常的主动抛出:**
@@ -628,7 +667,7 @@ except NameError:
 	raise
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExceptRaise.png)
+![tryExceptRaise](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExceptRaise.png)
 
 ***
 * **异常的捕获:**
@@ -643,7 +682,7 @@ while True:
 		break
 ```  
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExcept.png)
+![tryExcept](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExcept.png)
 
 ***
 * **自定义class的学习:**  
@@ -658,7 +697,7 @@ x= Complex(3.0,-4.5)
 print(x.r,x.i)
 ```
 -	**运行后如下图:**  <br />
-![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/class.png)
+![class](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/class.png)
 
 ***
 
