@@ -1,7 +1,7 @@
 ﻿# 机器学习实践指南  
 	案例应用解析,第二版,机械工业出版社,ISBN:978-7-111-54021-2 
 ***
-# 以下是声音基础
+# 以下Python是声音基础
 ***
 
 ***
@@ -119,7 +119,7 @@ pl.show()
 
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LowerVolume.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LowerVolume.png)  
 
 
 
@@ -226,7 +226,7 @@ fileOUT.close()
 pl.show()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LouderVolume.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/LouderVolume.png)  
 
 
 ***
@@ -278,10 +278,87 @@ pl.plot(time,wave_data[1],c="g")
 pl.xlabel("time (seconds)")
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/plottingWaveform.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/plottingWaveform.png)  
 
 ***
 # 以下是python图像基础
+***
+* **图像的文字信息隐藏:**
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+hideMessages.py
+
+图像隐藏信息的原理:
+    首先从源图中提取文字图像信息
+    记录这个文字图像信息像素点在图像矩阵的位置
+    对载体文件进行预处理,将蓝色像素值全部设为偶数
+    最后将记录的文字信息像素点在载体文件对应位置的蓝色像素值设为奇数
+图像隐藏信息解密原理:
+    提取载体文件中蓝色像素值为奇数的像素点
+    
+@author: Oscar
+"""
+
+import cv2
+
+#含有文字的图像
+fnMessageImg = "img/test1.jpg"
+#载体文件
+fnBaseImg = "img/test2.jpg"
+#包含隐藏信息的载体文件
+fnSecretImg = "img/secret.jpg"
+
+#注意是(b,g,r),而不是(r,g,b)
+redColor=(0,0,255)
+if __name__ == "__main__":
+    print(u"正在处理中......")
+    #图像大小
+    messageImg = cv2.imread(fnMessageImg)
+    baseImg = cv2.imread(fnBaseImg)
+    height = messageImg.shape[0]
+    width = messageImg.shape[1]
+    
+    #加上要隐藏的信息
+    cv2.putText(messageImg,"Hello World!",(20,300),cv2.FONT_HERSHEY_PLAIN,2.0,redColor,thickness = 2)
+    
+    cv2.namedWindow('messageImg')
+    cv2.imshow('messageImg',messageImg)
+    cv2.namedWindow('baseImg')
+    cv2.imshow('baseImg',baseImg)
+    
+    #处理隐藏信息载体图
+    #将所有蓝色值变成偶数
+    for j in range(0,height):
+        for i in range(0,width):
+            if (baseImg[j,i,0] % 2) == 1:
+                baseImg[j,i,0] -= 1
+        print("changing......",round(50*j / height),"%")
+        mirror_w = width /2
+    
+    #读取源图,将信息写人目标图,将有信息的像素点的蓝色值设为奇数
+    for j in range(0,height):
+        for i in range(0,width):
+            if(messageImg[j,i,0],messageImg[j,i,1],messageImg[j,i,2]) == redColor:
+                baseImg[j,i,0] += 1
+        print("writing.......",round(50*j / height)+50,"%")
+    
+    #保存修改后的目标图,并显示
+    cv2.namedWindow('secretImg')
+    cv2.imshow('secretImg',baseImg)
+    cv2.imwrite(fnSecretImg,baseImg)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+```
+-	**运行后如下图(源文件):**  <br />
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/baseImg.png)    
+-	**运行后如下图(载体文件):**  <br />
+![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/messageImg.png)  
+-	**运行后如下图(隐藏信息后的文件):**  <br />
+![def](/python%E5%9F%BA%E7%A1%80/%E5%A3%B0%E9%9F%B3%E5%9F%BA%E7%A1%80/saveImg/secretImg.png)  
+
+
 ***
 * **平铺图片:**
 ```python
@@ -332,7 +409,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/TileImgpy.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/TileImgpy.png)  
 
 ***
 * **图片的负片+水印效果:**
@@ -372,7 +449,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/negativeImg.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/negativeImg.png)  
 
 
 ***
@@ -407,7 +484,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/sunset.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/sunset.png)  
 
 ***
 * **调整图像亮度:**  
@@ -452,9 +529,9 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图(dark):**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_dark.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_dark.png)  
 -	**运行后如下图(light):**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_light.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/AdjustBrightness_light.png)  
 
 ***
 * **图像基础,读取图像:**
@@ -472,7 +549,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/imageBase.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/imageBase.png)  
 
 
 ***
@@ -510,7 +587,7 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/randomXY.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/randomXY.png)  
 
 ***
 * **正余弦图像的绘制:**   
@@ -535,10 +612,10 @@ plt.plot(x,y)
 plt.show()
 ```
 -	**运行后如下图(sin):**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_sin.png)  
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_sin.png)  
 
 -	**运行后如下图(cos):**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_cos.png)
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/Numpy_pylab_matplotlib_cos.png)
 
 ***
 * **异常的主动抛出:**
@@ -551,7 +628,7 @@ except NameError:
 	raise
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExceptRaise.png)
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExceptRaise.png)
 
 ***
 * **异常的捕获:**
@@ -566,7 +643,7 @@ while True:
 		break
 ```  
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExcept.png)
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/tryExcept.png)
 
 ***
 * **自定义class的学习:**  
@@ -581,7 +658,7 @@ x= Complex(3.0,-4.5)
 print(x.r,x.i)
 ```
 -	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/class.png)
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/class.png)
 
 ***
 
@@ -597,7 +674,7 @@ def fib(n):
 fib(2000)
 ```
 - 	**运行后如下图:**  <br />
-![def](https://github.com/510850111/Machine-Learning/blob/master/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/def.png)
+![def](/python%E5%9F%BA%E7%A1%80/%E5%9B%BE%E5%83%8F%E5%9F%BA%E7%A1%80/saveImg/def.png)
 
 ***
 
