@@ -4,13 +4,14 @@
 将蓝色值和绿色值设为原来的70%,红色值不变
 """
 import cv2
-import numpy as np
 fn="img/test1.jpg"
 
 if __name__ == '__main__':
     img = cv2.imread(fn)
+    print(img)
     w=img.shape[1]
-    h=img.shape[0]    
+    h=img.shape[0] 
+    print(w)
     ii=0
     #生成日落效果
     #b[:,:] = img[:,:,0]  

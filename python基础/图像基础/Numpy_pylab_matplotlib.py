@@ -6,9 +6,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #sin函数绘制
-x = np.arange(-8,8,0.01)
-y = np.sin(x)
+x = np.arange(0,5,0.1)
 
+y = np.sin(x)
+print(type(y))
 plt.plot(x,y)
 plt.show()
 
