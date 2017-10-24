@@ -1,0 +1,162 @@
+fruit_class <- c("苹果","梨子","橘子","草莓","苹果","橘子","橘子","草莓","橘子","草莓")
+fruit_price <- c(3.5,2.5,1.5,5.5,4.2,3.2,2.8,4.8,2.9,5.8)
+stderr <- function(x) sqrt(var(x) / length(x)) #自定义stderr函数
+tapply(fruit_price,fruit_class,stderr)
+tapply(fruit_price,fruit_class,sd)
+tapply(fruit_price,fruit_class,min)
+tapply(fruit_price,fruit_class,mean)
+
+my_num <- c(11,22,34,71,14,68,21,22,11,34)
+dim(my_num) <- c(2,5) #指定数组维度为2行5列
+my_num
+dim(my_num) <- c(10) #指定数组维度为1行10列(需要与对象长度匹配)
+my_num
+dim(my_num) <- c(6) #错误
+my_num
+dim(my_num) <- c(15) #错误
+my_num
+
+
+Array <- c(1,2,3,4,5,6)
+dim(Array) <- c(2,3) #产生一个2行3列的矩阵
+Array
+c(Array[1,2],Array[2,3]) #获取第1行第2列数据(为3),第2行第3列数据(为6)
+Array[2,] #获取第2行的所有数据
+Array[c(1,2,3)] #逐列获取第1,2,3个数据
+Array[6]# 逐列获取第6个数据
+Array[4]# 逐列获取第4个数据
+
+x <- array(10:20,dim=c(2,5))
+x
+i <- array(c(1:3,5:4,3:5),dim=c(2,3)) #1,2,3,5,4,3,4,5,其中,最后的4,5未被列入矩阵
+i
+
+x[i]
+
+x[i] <- -111
+x
+
+
+
+h <- c(1:20)
+mya <- array(h,dim=c(4,5)) #4行5列
+mya
+mydim <- c(2,10)
+mya <- array(h,dim=mydim)#相当于array(h,dim=c(2,10))
+mya
+dim(mya) #查看矩阵的行列数
+
+mya <- array(1,dim=c(2,10))
+mya
+
+
+x <- array(c(1:10),dim=c(2,5))
+x
+as.vector(x)
+
+
+matrix(c(1:10),2,5,TRUE)
+matrix(c(1:10),2,5)
+matrix(c(1:10),2,5,FALSE)
+
+a <- c(1:10)
+diag(a) #生成对角矩阵
+a <- array(c(1:16),dim=c(4,4))
+diag(a) #提取对角线元素
+a
+
+mya <- array(c(1:20),dim=c(2,10))
+mya
+myb <- array(2,dim=c(2,10))
+myb
+mya+myb #加法
+mya*myb #乘法
+3*mya*myb #连乘
+mya+mya*myb #先乘除后加减
+
+
+x2 <- c(101:105)
+x1 <- c(1:10)
+cbind(x1,x2)
+rbind(x1,x2)
+
+
+x3 <- matrix(c(1:10),2,5)
+x4 <- matrix(c(101:105),2,5)
+x3
+x4
+cbind(x3,x4)
+rbind(x3,x4)
+
+
+array(1:10,dim=c(2,5)) -> mya
+mya 
+t(mya) #矩阵转置
+
+
+array(1:10,dim=c(2,5)) -> mya
+mya
+aperm(mya,prem=c(2,1)) -> myb #以c(2,1)为维度下标进行转置
+myb
+array(mya,c(2,2,5)) -> myc
+myc
+aperm(myc,perm=c(2,1,3)) -> myd #以c(2,1,3)为维度下标进行转置
+myd
+aperm(myc,perm=c(1,3,2)) -> myd
+myd
+
+
+array(1:10,dim=c(2,5)) -> a
+a
+array(1:10,dim=c(5,2)) -> b
+b 
+a %*% b #矩阵乘积计算
+
+
+a <- array(c(1:4))
+a
+b <- array(c(5:8))
+b
+a%o%b #外积
+b%o%a #外积
+a*b #普通乘法
+b*a #普通乘法
+
+
+a <- c(1:3)
+b <- c(4:6)
+crossprod(a,b)
+
+a <- array(c(1,3),dim=c(1,3))
+a
+b <- array(c(4,6),dim=c(1,3))
+b
+crossprod(a,b) #a与b完成矩阵内积计算
+t(a) %*% b #a的转置与b完成矩阵内积计算
+
+
+
+a <- array(1:4,dim=c(2,2))
+a
+b <- array(8:9,dim=c(2,1))
+b
+solve(a,b)
+
+
+a <- array(1:4,dim=c(2,2))
+a
+solve(a)
+
+
+a <- array(c(1:16),dim=c(4,4))
+eigen(a) #计算a的特征值
+eigen(a,only.values=FALSE)#计算a的特征值和特征向量
+
+
+a <- array(c(1:4),dim=c(2,2))
+det(a)
+
+
+a <- array(c(1:16),dim=c(4,4))
+a
+svd(a) #奇异分解
