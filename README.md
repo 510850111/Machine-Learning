@@ -4,6 +4,7 @@
 # 以下是R语言基础
 ***
 * **R语言基础语法和操作:**
+**[机器学习第4章第2节 : R语言科学计算](http://blog.csdn.net/u013733326/article/details/78318624)**
 **[机器学习第4章第1节 : R语言基本语法及操作](http://blog.csdn.net/u013733326/article/details/78278636)**
 ***
 # 以下是Python声音基础
